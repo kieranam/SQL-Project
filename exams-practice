@@ -1,0 +1,36 @@
+CREATE TABLE exams (
+    student_id integer,
+    exam varchar,
+    score integer,
+    id integer PRIMARY KEY,
+    exam_date date,
+    graduation_year integer);
+
+INSERT INTO exams (student_id, exam, score, id, exam_date, graduation_year) VALUES
+    (1001, 'ACT', 27, 1575, '2017-09-03', 2018),
+    (1001, 'ACT', 23, 1455, '2017-04-12', 2018),
+    (1001, 'SAT', 1430, 1488, '2017-02-23',2018),
+    (1001, 'SAT', 1500, 1530, '2017-06-21',2018),
+    (1002, 'ACT', 20, 1400, '2017-04-12', 2018),
+    (1002, 'ACT', 25, 1532, '2017-09-03', 2018),
+    (1002, 'SAT', 1300, 1483, '2017-02-23', 2018),
+    (1002, 'SAT', 1350, 1524, '2017-06-21', 2018);
+    
+SELECT * FROM exams;
+
+INSERT INTO exams (student_id, exam, score, id, exam_date, graduation_year) VALUES
+    (1003, 'ACT', 20, 1456, '2017-04-12', 2019),
+    (1003, 'SAT', 1550, 1555, '2017-06-21', 2019),
+    (1004, 'ACT', 30, 1444, '2017-04-12', 2019),
+    (1004, 'SAT', 1550, 1500, '2017-06-21', 2019);
+    
+SELECT * FROM exams;
+SELECT * FROM exams WHERE student_id = 1001;
+SELECT * FROM exams WHERE exam = 'ACT';
+SELECT * FROM exams WHERE exam = 'ACT' AND score > 25;
+SELECT * FROM exams WHERE exam = 'ACT' OR graduation_year = 2018;
+SELECT * FROM exams WHERE exam_date = '2017-09-03';
+SELECT * FROM exams WHERE exam = 'SAT' AND score >= 1500;
+SELECT * FROM exams WHERE student_id <> 1002;
+SELECT * FROM exams WHERE exam_date >= '2017-04-12' AND exam_date <= '2017-06-21';
+
