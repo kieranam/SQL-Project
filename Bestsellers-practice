@@ -1,0 +1,89 @@
+/* The purpose of this SQL code is to show how I imported data from the web, created a table(relation), and then used the data to answer questions.
+* The data from this code is in the file best_uniq_weeks.csv under 'SQL-Project'. */
+
+/*The first step is to create the table, name it, and input columns with data types. */
+
+CREATE TABLE bsbooks(
+publisher VARCHAR,
+dagger Boolean,
+link VARCHAR,
+author VARCHAR,
+isbn VARCHAR,
+price BOOLEAN,
+isbn13 VARCHAR,
+link2 VARCHAR,
+date VARCHAR,
+link3 VARCHAR,
+contributor VARCHAR,
+title VARCHAR,
+age_group VARCHAR,
+weeks_on_list INTEGER);
+
+/* Next I copied the data from the original csv file into the table I have just created. */
+
+COPY bsbooks FROM '/home/kieran/best_uniq_weeks.csv' DELIMITER ',' CSV HEADER;
+
+/* This step shows a view of the full table. */
+
+SELECT * FROM bsbooks;
+
+/* This SELECT statement shows columns I am more interested in querying, and leaves out the rest of the columns. */
+
+SELECT publisher, author, isbn, date, contributor, title, weeks_on_list FROM bsbooks;
+
+/* QUESTIONS */
+
+/* What books (with authors) were on the best selling list for more than 20 weeks? */
+SELECT author, title FROM
+    (SELECT author, title, weeks_on_list FROM bsbooks
+      WHERE weeks_on_list > 20
+      ORDER BY weeks_on_list DESC) as e;
+
+/* What best selling books were authored by someone whose name starts with 'Nicholas'? */
+SELECT author, title FROM bsbooks
+WHERE author LIKE 'Nicholas%';
+
+/* What best selling books had an author whose name start with 'n' and had the publisher Berkley? */
+SELECT author, title FROM
+    (SELECT publisher, author, title FROM bsbooks
+      WHERE author LIKE 'N%' AND publisher = 'Berkley') As a;
+
+/* This helps to shorten queries by giving 'weeks_on_list' a short alias, only temporary */
+SELECT publisher, author, date, title, weeks_on_list AS weeks FROM bsbooks;
+
+/* What publishers are on the best selling list, without duplicates? */
+SELECT DISTINCT publisher FROM bsbooks
+ORDER BY publisher;
+
+/* How many unique publishers are there? */
+SELECT COUNT(DISTINCT publisher) FROM bsbooks;
+
+/* What authors are on the best selling list, not including duplicates? */
+SELECT DISTINCT author FROM bsbooks
+ORDER BY author;
+
+/* How many unique authors are on the best selling list? */
+SELECT COUNT(DISTINCT author) FROM bsbooks;
+
+/* This filters the table by publishers alphabetically */
+SELECT publisher, author, date, title, weeks_on_list AS Weeks FROM bsbooks
+ORDER BY publisher;
+
+/* How many books does each publisher have on the best selling list? */
+SELECT publisher, COUNT(title) FROM bsbooks
+GROUP BY publisher
+ORDER BY count DESC;
+
+/* Who are the top 10 publishers on the best selling list by number of titles? */
+SELECT publisher
+FROM (SELECT publisher, COUNT(title) FROM bsbooks
+      GROUP BY publisher
+      ORDER BY count DESC
+      LIMIT 10) AS example;
+
+/* Who are the top 10 publishers on the best selling list by number of authors? */
+SELECT publisher FROM
+  (SELECT COUNT(DISTINCT(author)), publisher FROM bsbooks
+    GROUP BY publisher
+    ORDER BY count DESC
+    LIMIT 10) AS a;
