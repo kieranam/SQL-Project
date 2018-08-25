@@ -1,0 +1,37 @@
+CREATE Table employees (
+    employee_id integer PRIMARY KEY,
+    first_name varchar,
+    last_name varchar,
+    birth_date date
+);
+
+SELECT employee_id, first_name, last_name, birth_date FROM employees;
+
+INSERT INTO employees (employee_id,first_name,last_name,birth_date) VALUES
+        (001,'Chelsea','Drake','1976-12-03'),
+        (002,'David','Henry','1988-04-23'),
+        (003,'Gregory','Thomas','1977-09-21'),
+        (004,'Brittani','Karl','1969-07-12'),
+        (005,'Sasha','Vort','1970-03-01');
+
+SELECT * FROM employees;
+
+SELECT employee_id, first_name, last_name, birth_date FROM employees WHERE employee_id = 1;
+
+SELECT employee_id, first_name, last_name, birth_date FROM employees WHERE first_name = 'Sasha';
+
+SELECT employee_id, first_name, last_name, birth_date FROM employees WHERE birth_date = '1988-04-23';
+
+SELECT employee_id, first_name, last_name, birth_date FROM employees WHERE last_name LIKE 'K%';
+
+SELECT employee_id, first_name, last_name, birth_date FROM employees WHERE birth_date >= '1970-01-01';
+
+SELECT employee_id, first_name, last_name, birth_date FROM employees LIMIT 3;
+
+SELECT employee_id, first_name, last_name, birth_date FROM employees WHERE employee_id NOT IN (1,2);
+
+SELECT employee_id, first_name, last_name, birth_date FROM employees WHERE first_name <> 'Gregory';
+
+
+
+
