@@ -87,3 +87,24 @@ SELECT publisher FROM
     GROUP BY publisher
     ORDER BY count DESC
     LIMIT 10) AS a;
+
+/* How many unique authors, whose names start with A or B, are on the best selling list? */
+SELECT COUNT(DISTINCT(author)) FROM bsbooks
+WHERE author BETWEEN 'A' AND 'C';
+
+/*  Who are the top ten authors on the best selling list by number of books? */
+SELECT author FROM
+  (SELECT author, COUNT(title) FROM bsbooks
+    GROUP BY author
+    ORDER BY count DESC
+    LIMIT 10) AS a;
+
+/* What are the top ten titles, including authors, on the best selling list by number of weeks on the list? */
+SELECT title, author FROM
+  (SELECT author, title, weeks_on_list AS weeks FROM bsbooks
+    ORDER BY weeks DESC
+    LIMIT 10) AS a;
+
+
+
+
